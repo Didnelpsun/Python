@@ -5,11 +5,12 @@ import argparse
 from data_loader import get_loader, to_categorical
 
 
+# 条件实例归一化网络
 class ConditionalInstanceNormalisation(nn.Module):
-    """CIN Block."""
+    """CIN块"""
     def __init__(self, dim_in, style_num):
         super(ConditionalInstanceNormalisation, self).__init__()
-
+        # 定义cpu或者gpu运行
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
         self.dim_in = dim_in
