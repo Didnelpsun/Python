@@ -38,6 +38,7 @@ def world_decode_spectral_envelop(coded_sp, fs):
 
 # 从对应的文件路径和采样率获取对应wav文件的基频，非周期性特征等数据
 def world_encode_wav(wav_file, fs, frame_period=5.0, coded_dim=36):
+    # 加载wav数据
     wav = load_wav(wav_file, sr=fs)
     f0, timeaxis, sp, ap = world_decompose(wav=wav, fs=fs, frame_period=frame_period)
     coded_sp = world_encode_spectral_envelop(sp=sp, fs=fs, dim=coded_dim)
