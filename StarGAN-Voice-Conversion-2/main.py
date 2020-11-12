@@ -13,7 +13,7 @@ def main(config):
     # For fast training.
     cudnn.benchmark = True
 
-    # Create directories if not exist.
+    # 如果没有文件夹就新建对应的文件夹
     if not os.path.exists(config.log_dir):
         os.makedirs(config.log_dir)
     if not os.path.exists(config.model_save_dir):
@@ -25,7 +25,7 @@ def main(config):
     src_spk = config.speakers[0]
     trg_spk = config.speakers[1]
 
-    # Data loader.
+    # 数据加载器
     train_loader = get_loader(config.speakers, config.train_data_dir, config.batch_size, 'train', num_workers=config.num_workers)
     # TODO: currently only used to output a sample whilst training
     test_loader = TestDataset(config.speakers, config.test_data_dir, config.wav_dir, src_spk=src_spk, trg_spk=trg_spk)
