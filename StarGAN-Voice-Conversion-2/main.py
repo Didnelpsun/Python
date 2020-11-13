@@ -10,7 +10,7 @@ def str2bool(v):
 
 
 def main(config):
-    # For fast training.
+    # 为了快速训练
     cudnn.benchmark = True
 
     # 如果没有文件夹就新建对应的文件夹
@@ -30,7 +30,7 @@ def main(config):
     # TODO: currently only used to output a sample whilst training
     test_loader = TestDataset(config.speakers, config.test_data_dir, config.wav_dir, src_spk=src_spk, trg_spk=trg_spk)
 
-    # Solver for training and testing StarGAN.
+    # StarGAN训练和测试解决方案。
     solver = Solver(train_loader, test_loader, config)
 
     if config.mode == 'train':
@@ -43,14 +43,14 @@ def main(config):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    # Model configuration.
+    # 模型配置
     parser.add_argument('--num_speakers', type=int, default=4, help='dimension of speaker labels')
     parser.add_argument('--lambda_rec', type=float, default=10, help='weight for reconstruction loss')
     parser.add_argument('--lambda_gp', type=float, default=5, help='weight for gradient penalty')
     parser.add_argument('--lambda_id', type=float, default=5, help='weight for id mapping loss')
     parser.add_argument('--sampling_rate', type=int, default=16000, help='sampling rate')
 
-    # Training configuration.
+    # 训练配置
     parser.add_argument('--batch_size', type=int, default=8, help='mini-batch size')
     parser.add_argument('--num_iters', type=int, default=200000, help='number of total iterations for training D')
     parser.add_argument('--num_iters_decay', type=int, default=100000, help='number of iterations for decaying lr')
@@ -61,15 +61,15 @@ if __name__ == '__main__':
     parser.add_argument('--beta2', type=float, default=0.999, help='beta2 for Adam optimizer')
     parser.add_argument('--resume_iters', type=int, default=None, help='resume training from this step')
 
-    # Test configuration.
+    # 测试配置
     parser.add_argument('--test_iters', type=int, default=100000, help='test model from this step')
 
-    # Miscellaneous.
+    # 其他
     parser.add_argument('--num_workers', type=int, default=1)
     parser.add_argument('--mode', type=str, default='train', choices=['train', 'test'])
     parser.add_argument('--use_tensorboard', type=str2bool, default=True)
 
-    # Directories.
+    # 文件夹
     parser.add_argument('--train_data_dir', type=str, default='./data/mc/train')
     parser.add_argument('--test_data_dir', type=str, default='./data/mc/test')
     parser.add_argument('--wav_dir', type=str, default="./data/VCTK-Corpus/wav16")
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     parser.add_argument('--sample_dir', type=str, default='./samples')
     parser.add_argument('--speakers', type=str, nargs='+', required=True, help='Speaker dir names.')
 
-    # Step size.
+    # 步长
     parser.add_argument('--log_step', type=int, default=10)
     parser.add_argument('--sample_step', type=int, default=10000)
     parser.add_argument('--model_save_step', type=int, default=10000)
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     config = parser.parse_args()
 
     if len(config.speakers) < 2:
-        raise RuntimeError("Need at least 2 speakers to convert audio.")
+        raise RuntimeError("需要至少2个发音者来转换音频。")
 
     print(config)
     main(config)

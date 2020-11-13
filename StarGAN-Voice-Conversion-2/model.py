@@ -137,7 +137,7 @@ class Generator(nn.Module):
         x = x.contiguous().view(-1, 2304, width_size // 4)
         # 下转换层
         x = self.down_conversion(x)
-        # 9个瓶颈层
+        # 9个瓶颈层（用来风格转换）
         x = self.residual_1(x, c)
         x = self.residual_2(x, c)
         x = self.residual_3(x, c)
