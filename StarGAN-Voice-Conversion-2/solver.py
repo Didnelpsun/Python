@@ -246,11 +246,11 @@ class Solver(object):
                 mc_reconst = self.generator(mc_fake, spk_c_org)
                 g_loss_rec = torch.mean(torch.abs(mc_real - mc_reconst))
 
-                # Original-to-original, Id mapping loss. Mapping
+                # 源域到源域，身份映射损失
                 mc_fake_id = self.generator(mc_real, spk_c_org)
                 g_loss_id = torch.mean(torch.abs(mc_real - mc_fake_id))
 
-                # Backward and optimize.
+                # 反向和优化
                 g_loss = g_loss_fake \
                     + self.lambda_rec * g_loss_rec \
                     + self.lambda_id * g_loss_id
@@ -259,16 +259,16 @@ class Solver(object):
                 g_loss.backward()
                 self.g_optimizer.step()
 
-                # Logging.
+                # 记录
                 loss['G/loss_fake'] = g_loss_fake.item()
                 loss['G/loss_rec'] = g_loss_rec.item()
                 loss['G/loss'] = g_loss.item()
 
             # =================================================================================== #
-            #                                 4. Miscellaneous                                    #
+            #                                          4. 其他                                     #
             # =================================================================================== #
 
-            # Print out training information.
+            # 打印训练信息
             if (i+1) % self.log_step == 0:
                 et = time.time() - start_time
                 et = str(datetime.timedelta(seconds=et))[:-7]
@@ -314,7 +314,7 @@ class Solver(object):
                             librosa.output.write_wav(join(self.sample_dir, 'cpsyn-'+wav_name), wav_cpsyn, sampling_rate)
                     cpsyn_flag = False
 
-            # Save model checkpoints.
+            # 保存模型检查点
             if (i+1) % self.model_save_step == 0:
                 g_path = os.path.join(self.model_save_dir, '{}-G.ckpt'.format(i+1))
                 d_path = os.path.join(self.model_save_dir, '{}-D.ckpt'.format(i+1))
@@ -323,7 +323,7 @@ class Solver(object):
                 torch.save(self.discriminator.state_dict(), d_path)
                 print('Saved model checkpoints into {}...'.format(self.model_save_dir))
 
-            # Decay learning rates.
+            # 衰减学习率
             if (i+1) % self.lr_update_step == 0 and (i+1) > (self.num_iters - self.num_iters_decay):
                 g_lr -= (self.g_lr / float(self.num_iters_decay))
                 d_lr -= (self.d_lr / float(self.num_iters_decay))
