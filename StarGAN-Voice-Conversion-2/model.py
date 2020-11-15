@@ -25,9 +25,7 @@ class ConditionalInstanceNormalisation(nn.Module):
         # 计算标准差
         var = torch.mean((x - u) * (x - u), dim=2, keepdim=True)
         std = torch.sqrt(var + 1e-8)
-
         # width = x.shape[2]
-
         gamma = self.gamma(c.to(self.device))
         gamma = gamma.view(-1, self.dim_in, 1)
         beta = self.beta(c.to(self.device))

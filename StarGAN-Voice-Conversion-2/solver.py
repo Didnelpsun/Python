@@ -14,7 +14,7 @@ class Solver(object):
     """StarGAN训练和测试解决方案"""
 
     def __init__(self, train_loader, test_loader, config):
-        """Initialize configurations."""
+        """初始化配置"""
 
         # 数据加载器
         self.train_loader = train_loader
@@ -142,6 +142,7 @@ class Solver(object):
         spk_c_cat = to_categorical(spk_c, self.num_speakers)
         return torch.LongTensor(spk_c), torch.FloatTensor(spk_c_cat)
 
+    # 分类损失函数
     def classification_loss(self, logit, target):
         """计算softmax交叉熵损失值"""
         return F.cross_entropy(logit, target)
@@ -152,7 +153,7 @@ class Solver(object):
 
     def train(self):
         """训练StarGAN."""
-        # Set data loader.
+        # 设置数据加载器
         train_loader = self.train_loader
         data_iter = iter(train_loader)
 
@@ -175,7 +176,7 @@ class Solver(object):
             start_iters = self.resume_iters
             self.restore_model(self.resume_iters)
 
-        # Start training.
+        # 开始训练
         print('开始训练...')
         start_time = time.time()
         for i in range(start_iters, self.num_iters):
@@ -272,7 +273,7 @@ class Solver(object):
             if (i+1) % self.log_step == 0:
                 et = time.time() - start_time
                 et = str(datetime.timedelta(seconds=et))[:-7]
-                log = "Elapsed [{}], Iteration [{}/{}]".format(et, i+1, self.num_iters)
+                log = "训练花费时间 [{}], 迭代次数 [{}/{}]".format(et, i+1, self.num_iters)
                 for tag, value in loss.items():
                     log += ", {}: {:.4f}".format(tag, value)
                 print(log)
@@ -285,6 +286,7 @@ class Solver(object):
                 sampling_rate = 16000
                 num_mcep = 36
                 frame_period = 5
+                # 禁止梯度计算
                 with torch.no_grad():
                     for idx, wav in tqdm(enumerate(test_wavs)):
                         wav_name = basename(test_wavfiles[idx])
@@ -321,11 +323,14 @@ class Solver(object):
 
                 torch.save(self.generator.state_dict(), g_path)
                 torch.save(self.discriminator.state_dict(), d_path)
-                print('Saved model checkpoints into {}...'.format(self.model_save_dir))
+                print('将模型检查点保存到{}...'.format(self.model_save_dir))
 
             # 衰减学习率
             if (i+1) % self.lr_update_step == 0 and (i+1) > (self.num_iters - self.num_iters_decay):
                 g_lr -= (self.g_lr / float(self.num_iters_decay))
                 d_lr -= (self.d_lr / float(self.num_iters_decay))
                 self.update_lr(g_lr, d_lr)
-                print('Decayed learning rates, g_lr: {}, d_lr: {}'.format(g_lr, d_lr))
+                print('衰减学习率, 生成器学习率g_lr: {}, 判别器学习率d_lr: {}'.format(g_lr, d_lr))
+
+    def test(self):
+        print('测试模型部分代码未完成')

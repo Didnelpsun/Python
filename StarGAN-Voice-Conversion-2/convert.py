@@ -12,7 +12,7 @@ from utils import world_decompose, pitch_conversion, world_encode_spectral_envel
 
 
 class ConvertDataset(object):
-    """Dataset for conversion."""
+    """转换用的数据"""
     def __init__(self, config, src_spk, trg_spk):
         speakers = config.speakers
         spk2idx = dict(zip(speakers, range(len(speakers))))
@@ -21,12 +21,12 @@ class ConvertDataset(object):
         self.src_spk = src_spk
         self.trg_spk = trg_spk
 
-        # Source speaker locations.
+        # 源发音者路径
         self.src_mc_files = sorted(glob.glob(join(config.test_data_dir, f'{self.src_spk}*.npy')))
         self.src_spk_stats = np.load(join(config.train_data_dir, f'{self.src_spk}_stats.npz'))
         self.src_wav_dir = f'{config.wav_dir}/{self.src_spk}'
 
-        # Target speaker locations.
+        # 目标发音者路径
         self.trg_spk_stats = np.load(join(config.train_data_dir, f'{self.trg_spk}_stats.npz'))
 
         self.logf0s_mean_src = self.src_spk_stats['log_f0s_mean']
@@ -64,13 +64,13 @@ def convert(config):
     sampling_rate, num_mcep, frame_period = config.sampling_rate, 36, 5
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    # Restore model
+    # 重启模型
     print(f'Loading the trained models from step {config.resume_model}...')
     generator = Generator(num_speakers=config.num_speakers).to(device)
     g_path = join(config.model_save_dir, f'{config.resume_model}-G.ckpt')
     generator.load_state_dict(torch.load(g_path, map_location=lambda storage, loc: storage))
 
-    # for all possible speaker pairs in config.speakers
+    # 遍历config.speakers中所有的发音者对
     for i in range(0, len(config.speakers)):
         for j in range(0, len(config.speakers)):
             if i != j:
@@ -80,13 +80,13 @@ def convert(config):
 
                 os.makedirs(target_dir, exist_ok=True)
 
-                # Load speakers
+                # 载入发音者
                 data_loader = ConvertDataset(config, src_spk=config.speakers[i], trg_spk=config.speakers[j])
                 print('---------------------------------------')
-                print('Source: ', config.speakers[i], ' Target: ', config.speakers[j])
+                print('源：', config.speakers[i], '目标：', config.speakers[j])
                 print('---------------------------------------')
 
-                # Read a batch of testdata
+                # 读入一批的测试数据
                 src_test_wavfiles = data_loader.get_batch_test_data(batch_size=config.num_converted_wavs)
                 src_test_wavs = [load_wav(wavfile, sampling_rate) for wavfile in src_test_wavfiles]
 
@@ -95,7 +95,7 @@ def convert(config):
                         print(f'({idx}), file length: {len(wav)}')
                         wav_name = basename(src_test_wavfiles[idx])
 
-                        # convert wav to mceps
+                        # 转换wav格式文件为MECP数据
                         f0, _, sp, ap = world_decompose(wav=wav, fs=sampling_rate, frame_period=frame_period)
                         f0_converted = pitch_conversion(f0=f0,
                                                         mean_log_src=data_loader.logf0s_mean_src,
@@ -103,18 +103,18 @@ def convert(config):
                                                         mean_log_target=data_loader.logf0s_mean_trg,
                                                         std_log_target=data_loader.logf0s_std_trg)
                         coded_sp = world_encode_spectral_envelop(sp=sp, fs=sampling_rate, dim=num_mcep)
-                        print("Before being fed into G: ", coded_sp.shape)
+                        print("在喂入数据到G前：", coded_sp.shape)
                         coded_sp_norm = (coded_sp - data_loader.mcep_mean_src) / data_loader.mcep_std_src
                         coded_sp_norm_tensor = torch.FloatTensor(coded_sp_norm.T).unsqueeze_(0).unsqueeze_(1).to(device)
                         spk_conds = torch.FloatTensor(data_loader.spk_c_trg).to(device)
 
-                        # generate converted speech
+                        # 生成转换后的音频数据
                         coded_sp_converted_norm = generator(coded_sp_norm_tensor, spk_conds).data.cpu().numpy()
                         coded_sp_converted = np.squeeze(coded_sp_converted_norm).T * data_loader.mcep_std_trg + data_loader.mcep_mean_trg
                         coded_sp_converted = np.ascontiguousarray(coded_sp_converted)
-                        print("After being fed into G: ", coded_sp_converted.shape)
+                        print("在喂入数据到G后：", coded_sp_converted.shape)
 
-                        # convert back to wav
+                        # 将数据转换回wav数据
                         wav_transformed = world_speech_synthesis(f0=f0_converted,
                                                                  coded_sp=coded_sp_converted,
                                                                  ap=ap,
