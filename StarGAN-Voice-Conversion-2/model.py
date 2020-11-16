@@ -58,7 +58,7 @@ class ResidualBlock(nn.Module):
 
 
 class Generator(nn.Module):
-    """Generator network."""
+    """生成器网络"""
     def __init__(self, num_speakers=4):
         super(Generator, self).__init__()
         # 下采样层
