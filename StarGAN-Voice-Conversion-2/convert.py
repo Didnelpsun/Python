@@ -16,7 +16,8 @@ class ConvertDataset(object):
     def __init__(self, config, src_spk, trg_spk):
         speakers = config.speakers
         spk2idx = dict(zip(speakers, range(len(speakers))))
-        assert trg_spk in speakers, f'The trg_spk should be chosen from {speakers}, but you choose {trg_spk}.'
+        # 使用断言查看输入的目标发音者是否存在
+        assert trg_spk in speakers, f'目标发音者参数trg_spk应该从{speakers}里选择，但是你输入的是{trg_spk}.'
 
         self.src_spk = src_spk
         self.trg_spk = trg_spk
@@ -65,7 +66,7 @@ def convert(config):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # 重启模型
-    print(f'Loading the trained models from step {config.resume_model}...')
+    print(f'从步骤{config.resume_model}开始加载训练过的模型...')
     generator = Generator(num_speakers=config.num_speakers).to(device)
     g_path = join(config.model_save_dir, f'{config.resume_model}-G.ckpt')
     generator.load_state_dict(torch.load(g_path, map_location=lambda storage, loc: storage))
@@ -92,7 +93,7 @@ def convert(config):
 
                 with torch.no_grad():
                     for idx, wav in enumerate(src_test_wavs):
-                        print(f'({idx}), file length: {len(wav)}')
+                        print(f'({idx})，文件长度：{len(wav)}')
                         wav_name = basename(src_test_wavfiles[idx])
 
                         # 转换wav格式文件为MECP数据
