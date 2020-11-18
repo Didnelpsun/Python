@@ -8,13 +8,13 @@ min_length = 512  # Using 512 randomly cropped frames
 
 
 def to_categorical(y, num_classes=None):
-    """Converts a class vector (integers) to binary class matrix.
+    """转换一个类向量(integers类型)变为一个二进制的类矩阵.
     E.g. for use with categorical_crossentropy.
-    # Arguments
+    # 参数
         y: class vector to be converted into a matrix
             (integers from 0 to num_classes).
         num_classes: total number of classes.
-    # Returns
+    # 返回值
         A binary matrix representation of the input. The classes axis
         is placed last.
     From Keras np_utils
@@ -35,7 +35,7 @@ def to_categorical(y, num_classes=None):
 
 
 class MyDataset(data.Dataset):
-    """Dataset for MCEP features and speaker labels."""
+    """包含MCEP特征和发音者标签的数据集"""
 
     def __init__(self, speakers_using, data_dir):
         self.speakers = speakers_using
