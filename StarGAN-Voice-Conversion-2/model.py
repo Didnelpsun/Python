@@ -88,7 +88,7 @@ class Generator(nn.Module):
             nn.InstanceNorm1d(num_features=256, affine=True)
         )
 
-        # 瓶颈层
+        # 瓶颈层，用于特色转换
         self.residual_1 = ResidualBlock(dim_in=256, dim_out=512, style_num=num_speakers)
         self.residual_2 = ResidualBlock(dim_in=256, dim_out=512, style_num=num_speakers)
         self.residual_3 = ResidualBlock(dim_in=256, dim_out=512, style_num=num_speakers)
