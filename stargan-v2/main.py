@@ -1,11 +1,8 @@
 """
 StarGAN v2
-Copyright (c) 2020-present NAVER Corp.
-
-This work is licensed under the Creative Commons Attribution-NonCommercial
-4.0 International License. To view a copy of this license, visit
-http://creativecommons.org/licenses/by-nc/4.0/ or send a letter to
-Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+版权所有（c）2020-现在 NAVER Corp
+本作品以知识共享署名非商业4.0国际许可证授权。要查看此许可证的副本，请访问http://creativecommons.org/licenses/by-nc/4.0/或者写信给
+Creative Commons，PO Box 1866, Mountain View, CA 94042, USA
 """
 
 import os
@@ -30,12 +27,15 @@ def subdirs(dname):
 
 
 def main(args):
+    # 打印对应参数
     print(args)
+    # 加速训练速度
     cudnn.benchmark = True
+    # 为CPU设置种子用于生成随机数，以使得结果是确定的
     torch.manual_seed(args.seed)
-
+    # 引用对应的解决方案
     solver = Solver(args)
-
+    # 训练模式
     if args.mode == 'train':
         assert len(subdirs(args.train_img_dir)) == args.num_domains
         assert len(subdirs(args.val_img_dir)) == args.num_domains
@@ -57,6 +57,7 @@ def main(args):
                                             shuffle=True,
                                             num_workers=args.num_workers))
         solver.train(loaders)
+    # 采样模式
     elif args.mode == 'sample':
         assert len(subdirs(args.src_dir)) == args.num_domains
         assert len(subdirs(args.ref_dir)) == args.num_domains
@@ -71,11 +72,14 @@ def main(args):
                                             shuffle=False,
                                             num_workers=args.num_workers))
         solver.sample(loaders)
+    # 测试模式
     elif args.mode == 'eval':
         solver.evaluate()
+    # 对齐模式
     elif args.mode == 'align':
         from core.wing import align_faces
         align_faces(args, args.inp_dir, args.out_dir)
+    # 其他模式则报错没有实现
     else:
         raise NotImplementedError
 
@@ -83,7 +87,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    # model arguments
+    # 模型参数
     parser.add_argument('--img_size', type=int, default=256,
                         help='Image resolution')
     parser.add_argument('--num_domains', type=int, default=2,
@@ -95,7 +99,7 @@ if __name__ == '__main__':
     parser.add_argument('--style_dim', type=int, default=64,
                         help='Style code dimension')
 
-    # weight for objective functions
+    # 目标函数权重
     parser.add_argument('--lambda_reg', type=float, default=1,
                         help='Weight for R1 regularization')
     parser.add_argument('--lambda_cyc', type=float, default=1,
@@ -109,7 +113,7 @@ if __name__ == '__main__':
     parser.add_argument('--w_hpf', type=float, default=1,
                         help='weight for high-pass filtering')
 
-    # training arguments
+    # 训练参数
     parser.add_argument('--randcrop_prob', type=float, default=0.5,
                         help='Probabilty of using random-resized cropping')
     parser.add_argument('--total_iters', type=int, default=100000,
@@ -133,7 +137,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_outs_per_domain', type=int, default=10,
                         help='Number of generated images per domain during sampling')
 
-    # misc
+    # 其他
     parser.add_argument('--mode', type=str, required=True,
                         choices=['train', 'sample', 'eval', 'align'],
                         help='This argument is used in solver')
@@ -142,7 +146,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=777,
                         help='Seed for random number generator')
 
-    # directory for training
+    # 训练的目录
     parser.add_argument('--train_img_dir', type=str, default='data/celeba_hq/train',
                         help='Directory containing training images')
     parser.add_argument('--val_img_dir', type=str, default='data/celeba_hq/val',
@@ -152,11 +156,11 @@ if __name__ == '__main__':
     parser.add_argument('--checkpoint_dir', type=str, default='expr/checkpoints',
                         help='Directory for saving network checkpoints')
 
-    # directory for calculating metrics
+    # 计算指标的目录
     parser.add_argument('--eval_dir', type=str, default='expr/eval',
                         help='Directory for saving metrics, i.e., FID and LPIPS')
 
-    # directory for testing
+    # 测试的目录
     parser.add_argument('--result_dir', type=str, default='expr/results',
                         help='Directory for saving generated images and videos')
     parser.add_argument('--src_dir', type=str, default='assets/representative/celeba_hq/src',
@@ -168,11 +172,11 @@ if __name__ == '__main__':
     parser.add_argument('--out_dir', type=str, default='assets/representative/celeba_hq/src/female',
                         help='output directory when aligning faces')
 
-    # face alignment
+    # 脸部对齐
     parser.add_argument('--wing_path', type=str, default='expr/checkpoints/wing.ckpt')
     parser.add_argument('--lm_path', type=str, default='expr/checkpoints/celeba_lm_mean.npz')
 
-    # step size
+    # 步长
     parser.add_argument('--print_every', type=int, default=10)
     parser.add_argument('--sample_every', type=int, default=5000)
     parser.add_argument('--save_every', type=int, default=10000)
