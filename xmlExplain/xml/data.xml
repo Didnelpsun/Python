@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 (http://www.altova.com) by  () -->
+<IMS>
+	<dorm id="D12617">
+		<student id="2018212603">
+			<name>金健行</name>
+			<telephone>13995554745</telephone>
+		</student>
+		<student id="2018212576">
+			<name>余鸿奇</name>
+			<telephone>17396120812</telephone>
+			<remarks>"换宿舍"&"转专业"&"<大学体育1>挂科"</remarks>
+		</student>
+		<student id="2018212587">
+			<name>喻庆祝</name>
+			<telephone>15537602474</telephone>
+			<remarks>"<数据结构>挂科"</remarks>
+		</student>
+		<student id="2018212590">
+			<name>李松烨</name>
+			<telephone>17396129890</telephone>
+			<remarks>“换宿舍”</remarks>
+		</student>
+	</dorm>
+	<dorm id="D12618"/>
+	<dorm id="D12619"/>
+	<dorm id="D12620"/>
+	<dorm id="D12621"/>
+	<dorm id="D12622"/>
+	<dorm id="D12623"/>
+</IMS>
