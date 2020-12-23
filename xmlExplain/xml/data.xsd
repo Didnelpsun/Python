@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<!--IMS元素为根元素-->
+	<xs:element name="IMS">
+		<xs:complexType>
+			<xs:sequence>
+				<!--IMS下面有一个或多个dorm元素-->
+				<xs:element ref="dorm" minOccurs="1" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!--dorm元素-->
+	<xs:element name="dorm">
+		<xs:complexType>
+			<xs:sequence>
+				<!--dorm元素下有0个到4个student元素-->
+				<xs:element ref="student" minOccurs="0" maxOccurs="4"/> 
+			</xs:sequence>
+			<!--dorm元素有一个id属性-->
+			<xs:attribute name="id">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<!--宿舍号最小5位，最大6位，如D12617-->
+						<xs:minLength value="5"></xs:minLength>
+						<xs:maxLength value="6"></xs:maxLength>
+						<!--开头字母可以为DXN表示东区西区南湖宿舍，然后接着两位数字表示宿舍栋，最后三位数字表示宿舍房价-->
+						<xs:pattern value="[DXN][0-9]{5}"></xs:pattern>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<!--student元素-->
+	<xs:element name="student">
+		<xs:complexType>
+			<xs:sequence>
+				<!--student有name和telephone两个必须的子元素和一个可以有但是只能有一个的remarks元素-->
+				<!--元素均为字符串类型-->
+				<xs:element name="name" type="xs:string"></xs:element>
+				<xs:element name="telephone" type="telephoneType"></xs:element>
+				<xs:element name="remarks" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+			</xs:sequence>
+			<!--student元素有一个id属性-->
+			<xs:attribute name="id">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<!--学号长度为10位数字-->
+						<xs:pattern value="[0-9]{10}"></xs:pattern>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<!--电话号码类型-->
+	<xs:simpleType name="telephoneType">
+		<xs:restriction base="xs:string">
+			<!--电话为11位数字-->
+			<xs:pattern value="[0-9]{11}"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
