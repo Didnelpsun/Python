@@ -87,7 +87,7 @@ def width(data, k):
     plt.show()
 
 
-# 等频离散化
+# 等频离散化，参数为列表与分类值
 def frequency(data, k):
     slide = math.ceil((len(data)) / k)
     index_list = []
@@ -168,5 +168,3 @@ if __name__ == "__main__":
     wmrj = get_bare_data(wmrj_url, cookies=cookie)
     width(wmrj, K)
     frequency(wmrj, K)
-
-
