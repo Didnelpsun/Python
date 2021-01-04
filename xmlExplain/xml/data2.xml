@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2014 (http://www.altova.com) by  () -->
+<?xml-stylesheet type="text/xsl" href="file:///E:/GitHub/Python/xmlExplain/xml/data.xslt"?>
+<IMS xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///E:/GitHub/Python/xmlExplain/xml/data.xsd">
+	<dorm id="D12617">
+		<student id="2018212603">
+			<name>金健行</name>
+			<telephone>13995554745</telephone>
+		</student>
+		<student id="2018212576">
+			<name>余鸿奇</name>
+			<telephone>17396120812</telephone>
+			<remarks>&quot;换宿舍&quot;&amp;&quot;转专业&quot;&amp;&quot;&lt;大学体育1&gt;挂科&quot;</remarks>
+		</student>
+		<student id="2018212587">
+			<name>喻庆祝</name>
+			<telephone>15537602474</telephone>
+			<remarks>&quot;&lt;数据结构&gt;挂科&quot;</remarks>
+		</student>
+		<student id="2018212590">
+			<name>李松烨</name>
+			<telephone>17396129890</telephone>
+			<remarks>&quot;换宿舍&quot;</remarks>
+		</student>
+	</dorm>
+	<dorm id="D12618">
+		<student id="2018212584">
+			<name>梁超闯</name>
+			<telephone>15578872790</telephone>
+			<remarks>&quot;换宿舍&quot;</remarks>
+		</student>
+		<student id="2018212604">
+			<name>魏浩浩</name>
+			<telephone>18205941871</telephone>
+			<remarks>&quot;换宿舍&quot;&amp;&quot;转专业&quot;</remarks>
+		</student>
+		<student id="2018212615">
+			<name>林浩然</name>
+			<telephone>17764080415</telephone>
+		</student>
+		<student id="2018212599">
+			<name>王志煜</name>
+			<telephone>15080417739</telephone>
+		</student>
+	</dorm>
+	<dorm id="D12619">
+		<student id="2018212596">
+			<name>唐庆乐</name>
+			<telephone>17396128120</telephone>
+		</student>
+		<student id="2018212609">
+			<name>李淼</name>
+			<telephone>15192266126</telephone>
+		</student>
+		<student id="2018212612">
+			<name>郝文博</name>
+			<telephone>13339865826</telephone>
+		</student>
+		<student id="2018212616">
+			<name>刘晓粤</name>
+			<telephone>18672730916</telephone>
+			<remarks>&quot;&lt;运筹学&gt;挂科&quot;</remarks>
+		</student>
+	</dorm>
+	<dorm id="D12620">
+		<student id="2018212573">
+			<name>吴子龙</name>
+			<telephone>17396121063</telephone>
+		</student>
+		<student id="2018212693">
+			<name>何良</name>
+			<telephone>17396128913</telephone>
+		</student>
+		<student id="2018212664">
+			<name>陈戴鑫</name>
+			<telephone>17396129007</telephone>
+		</student>
+		<student id="2018212691">
+			<name>胡嘉旻</name>
+			<telephone>17396129020</telephone>
+		</student>
+	</dorm>
+	<dorm id="D12621">
+		<student id="2018212692">
+			<name>梁笑语</name>
+			<telephone>17396129585</telephone>
+			<remarks>&quot;换宿舍&quot;</remarks>
+		</student>
+		<student id="2018212675">
+			<name>刘述岩</name>
+			<telephone>15679156506</telephone>
+		</student>
+		<student id="2018212659">
+			<name>王灏</name>
+			<telephone>18261177293</telephone>
+		</student>
+		<student id="2018212685">
+			<name>谭航</name>
+			<telephone>13529895540</telephone>
+			<remarks>&quot;换宿舍&quot;&amp;&quot;转专业&quot;&amp;&quot;&lt;经济学基础&gt;挂科&quot;</remarks>
+		</student>
+	</dorm>
+	<dorm id="D12622">
+		<student id="2018212651">
+			<name>唐万春</name>
+			<telephone>18723571564</telephone>
+		</student>
+		<student id="2018212715">
+			<name>陈鹏</name>
+			<telephone>15927199190</telephone>
+		</student>
+		<student id="2018212657">
+			<name>黄齐贤</name>
+			<telephone>15036160338</telephone>
+		</student>
+		<student id="2018212650">
+			<name>杜明</name>
+			<telephone>19911817928</telephone>
+			<remarks>&lt;换宿舍&gt;&amp;&lt;转专业&gt;</remarks>
+		</student>
+	</dorm>
+	<dorm id="D12623">
+		<student id="2018212674">
+			<name>谢涛</name>
+			<telephone>17396122612</telephone>
+		</student>
+		<student id="2018212661">
+			<name>钟正</name>
+			<telephone>13705753811</telephone>
+		</student>
+		<student id="2018212682">
+			<name>李昊罡</name>
+			<telephone>17613724396</telephone>
+		</student>
+		<student id="2018212711">
+			<name>王嘉贤</name>
+			<telephone>18607182632</telephone>
+		</student>
+	</dorm>
+</IMS>

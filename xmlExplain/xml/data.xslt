@@ -25,7 +25,7 @@
 		</html>
 	</xsl:template >
 	<xsl:template match="//dorm">
-		<xsl:call-template name="value">
+		<xsl:call-template name="value_first">
 			<xsl:with-param name="student" select="student[1]"></xsl:with-param>
 		</xsl:call-template>
 		<xsl:call-template name="value">
@@ -38,10 +38,19 @@
 			<xsl:with-param name="student" select="student[4]"></xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
+	<xsl:template name="value_first">
+		<xsl:param name="student"/>
+		<tr>
+			<td align="center" rowspan="4"><xsl:value-of select ="$ student/parent::dorm/@id"/></td>
+			<td align="center"><xsl:value-of select ="$ student/@id" /></td>
+			<td align="center"><xsl:value-of select= " $ student/name"/></td>
+			<td align="center"><xsl:value-of select = "$ student/telephone" /></td>
+			<td align="center"><xsl:value-of select = "$ student/remarks"/></td>
+		</tr>
+	</xsl:template>
 	<xsl:template name="value">
 		<xsl:param name="student"/>
 		<tr>
-			<td align="center"><xsl:value-of select ="$ student/parent::dorm/@id" /></td>
 			<td align="center"><xsl:value-of select ="$ student/@id" /></td>
 			<td align="center"><xsl:value-of select= " $ student/name"/></td>
 			<td align="center"><xsl:value-of select = "$ student/telephone" /></td>

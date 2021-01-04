@@ -1,6 +1,6 @@
 from lxml import etree
 
-xml = etree.parse('xml/test.xml')
+xml = etree.parse('xml/data.xml')
 movies = xml.xpath('//movies/@title')
 
 for element in movies:
